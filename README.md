@@ -1,6 +1,7 @@
 # Congress Bill Embedding Search
 
 ## Steps to Setup
+
 1. Initialize a virtual environment with `python -m venv venv`
 2. Activate with `python3 venv/bin/activate`
 3. Install dependencies from requirements.txt

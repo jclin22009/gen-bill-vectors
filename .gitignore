@@ -2,3 +2,4 @@ venv/*
 data.jsons
 output/*
 .env
+bill_embeddings.jsons
