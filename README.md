@@ -6,5 +6,6 @@
 2. Activate with `python3 venv/bin/activate`
 3. Install dependencies from requirements.txt
 4. Add your data file as `data.jsons` in the root directory
-5. Add your openAI env variable (see `env.example`)
-6. Celebrate
+5. Add the embeddings file as `bill_embeddings.jsons` in the root directory if you just want to load it
+6. Add your openAI env variable (see `env.example`)
+7. Celebrate
