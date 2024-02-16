@@ -5,6 +5,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 from dotenv import load_dotenv
 from openai import OpenAI
 import os
+import boto3
+from botocore.exceptions import NoCredentialsError
 
 app = Flask(__name__)
 
@@ -19,8 +21,18 @@ def gen_embedding(text):
     )
     return np.array(response.data[0].embedding)
 
-def load_embeddings_from_file():
-    with open("bill_embeddings.jsons", "r") as file:
+def download_file_from_s3(bucket_name, file_name, local_file_name):
+    s3 = boto3.client('s3')
+    print("Downloading bill embeddings")
+    try:
+        s3.download_file(bucket_name, file_name, local_file_name)
+        print(f"Successfully downloaded {file_name} from S3 bucket {bucket_name}")
+    except NoCredentialsError:
+        print("Credentials not available")
+        exit()
+
+def load_embeddings_from_file(file_path):
+    with open(file_path, "r") as file:
         bill_embeddings = []
         for line in file:
             json_object = json.loads(line)
@@ -33,7 +45,16 @@ def load_embeddings_from_file():
             )
         return bill_embeddings
 
-bill_embeddings = load_embeddings_from_file()
+# S3 bucket and file details
+bucket_name = 'bill-embeddings'
+file_name = 'bill_embeddings.jsons'
+local_file_name = 'bill_embeddings.jsons'
+
+# Download embeddings file from S3 on startup
+download_file_from_s3(bucket_name, file_name, local_file_name)
+
+# Load embeddings into memory
+bill_embeddings = load_embeddings_from_file(local_file_name)
 
 def cosine_sim(embedding1, embedding2):
     return cosine_similarity([embedding1], [embedding2])[0][0]
