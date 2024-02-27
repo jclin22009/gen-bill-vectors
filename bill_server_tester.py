@@ -2,7 +2,7 @@ import requests
 
 def test_search(query):
     # Replace the URL below with your Flask server URL; use localhost if running locally
-    url = 'http://127.0.0.1:5000/search'
+    url = 'https://bill-searcher-a10dbe344e55.herokuapp.com/search'
     params = {'query': query}
 
     response = requests.get(url, params=params)

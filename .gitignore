@@ -3,3 +3,5 @@ data.jsons
 output/*
 .env
 bill_embeddings.jsons
+bills.md
+bill_embeddings_verbose.jsons
